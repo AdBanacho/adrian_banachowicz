@@ -42,12 +42,7 @@ public class SpreadsheetImpl implements Spreadsheet {
     }
 
     /**
-     * Return the value stored in the cell at the specified row and column
-     *
-     * @param row    the row index of the cell
-     * @param column the column index of the cell
-     * @return the value of the cell as a String
-     * @throws IndexOutOfBoundsException if the row or column indices are out of bounds
+     * @inheritDoc
      */
     @Override
     public String get(int row, int column) {
@@ -56,12 +51,7 @@ public class SpreadsheetImpl implements Spreadsheet {
     }
 
     /**
-     * Updates the value of the cell at the specified row and column
-     *
-     * @param row    the row index of the cell
-     * @param column the column index of the cell
-     * @param value  the new value to store in the cell
-     * @throws IndexOutOfBoundsException if the row or column indices are out of bounds
+     * @inheritDoc
      */
     @Override
     public void put(int row, int column, String value) {
@@ -70,12 +60,7 @@ public class SpreadsheetImpl implements Spreadsheet {
     }
 
     /**
-     * Return the value type of the cell at the specified row and column
-     *
-     * @param row    the row index of the cell
-     * @param column the column index of the cell
-     * @return the ValueType of the cell
-     * @throws IndexOutOfBoundsException if the row or column indices are out of bounds
+     * @inheritDoc
      */
     @Override
     public ValueType getValueType(int row, int column) {
