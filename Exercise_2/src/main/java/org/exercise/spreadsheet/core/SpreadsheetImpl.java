@@ -5,7 +5,7 @@ import org.exercise.spreadsheet.data.ValueType;
 
 import java.util.stream.IntStream;
 
-public class SpreadsheetImpl {
+public class SpreadsheetImpl implements Spreadsheet {
     private final Integer numberOfRows;
     private final Integer numberOfColumns;
     private final Cell[][] cells;
@@ -17,24 +17,39 @@ public class SpreadsheetImpl {
         initializeCells(numberOfRows, numberOfColumns);
     }
 
-    private void initializeCells(int rows, int columns) {
-        IntStream.range(0, rows).forEach(row ->
-                IntStream.range(0, columns).forEach(col ->
-                        this.cells[row][col] = new Cell(ValueType.STRING, "")
+    private void initializeCells(int numberOfRows, int numberOfColumns) {
+        IntStream.range(0, numberOfRows).forEach(row ->
+                IntStream.range(0, numberOfColumns).forEach(col ->
+                        cells[row][col] = new Cell(ValueType.STRING, "")
                 )
         );
     }
 
+    @Override
     public String get(int row, int column) {
-        return this.cells[row][column].getValue();
+        validateIndices(row, column);
+        return getCell(row, column).getValue();
     }
 
-    public void put(int row, int column, String value){
-        this.cells[row][column].setValue(value);
+    @Override
+    public void put(int row, int column, String value) {
+        validateIndices(row, column);
+        getCell(row, column).setValue(value);
     }
 
+    @Override
     public ValueType getValueType(int row, int column) {
-        return this.cells[row][column].getValueType();
+        validateIndices(row, column);
+        return getCell(row, column).getValueType();
+    }
+
+    private void validateIndices(int row, int column) {
+        if (row < 0 || row >= getNumberOfRows()) {
+            throw new IndexOutOfBoundsException("Invalid row index: " + row);
+        }
+        if (column < 0 || column >= getNumberOfColumns()) {
+            throw new IndexOutOfBoundsException("Invalid column index: " + column);
+        }
     }
 
     public Integer getNumberOfRows() {
@@ -43,5 +58,9 @@ public class SpreadsheetImpl {
 
     public Integer getNumberOfColumns() {
         return numberOfColumns;
+    }
+
+    private Cell getCell(int row, int column) {
+        return cells[row][column];
     }
 }
