@@ -10,7 +10,7 @@ public class DashSpreadsheetExporter extends AbstractSpreadsheetExporter {
 
     @Override
     String getExportOption(){
-        return "#";
+        return "-";
     }
 
 }
