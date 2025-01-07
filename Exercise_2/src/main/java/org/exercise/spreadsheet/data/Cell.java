@@ -17,16 +17,20 @@ public class Cell {
         return value;
     }
 
-    public void setValueType(ValueType valueType) {
+    private void setValueType(ValueType valueType) {
         this.valueType = valueType;
     }
 
     public void setValue(String value) {
+        if (value == null) {
+            this.value = "";
+            setValueType(ValueType.EMPTY);
+            return;
+        }
+
         ValueType valueType = ValueType.determineValueType(value);
         setValueType(valueType);
-        if (ValueType.isInteger(this.getValueType())){
-            value = value.trim();
-        }
-        this.value = value;
+
+        this.value = (ValueType.isInteger(valueType)) ? value.trim() : value;
     }
 }
