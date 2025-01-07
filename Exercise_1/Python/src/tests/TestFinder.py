@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import MagicMock
 from Exercise_1.Python.src.main.Finder import Finder
 
 
@@ -120,6 +121,19 @@ class TestFinder(unittest.TestCase):
         self.assertEqual(key_1, (("age", 30), ("name", "John")))
         self.assertEqual(key_2, (("age", 27), ("name", "Adrian")))
 
+    def test_update_list_of_objects_guard_clause(self):
+        """Test the guard clause of an update method"""
+        initial_list = [1, 2, 3]
+        finder = Finder([1, 2, 3])
+
+        # Mock _count_objects to check if it is called
+        finder._count_objects = MagicMock()
+
+        # Test update_list_of_objects for same list
+        finder.update_list_of_objects(initial_list)
+
+        self.assertEqual(finder._list_of_objects, initial_list)
+        finder._count_objects.assert_not_called()
 
 if __name__ == "__main__":
     unittest.main()
