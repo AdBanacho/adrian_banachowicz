@@ -22,7 +22,11 @@ public class Cell {
     }
 
     public void setValue(String value) {
-        this.valueType = ValueType.determineValueType(value);
+        ValueType valueType = ValueType.determineValueType(value);
+        setValueType(valueType);
+        if (ValueType.isInteger(this.getValueType())){
+            value = value.trim();
+        }
         this.value = value;
     }
 }

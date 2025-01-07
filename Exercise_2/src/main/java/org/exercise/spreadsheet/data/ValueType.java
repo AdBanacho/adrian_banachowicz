@@ -6,13 +6,17 @@ public enum ValueType {
     STRING;
 
     public static ValueType determineValueType(String value) {
-        if (value.matches("-?\\d+(\\.\\d+)?")) {
+        if (value.trim().matches("-?\\d+")) {
             return ValueType.INTEGER;
         } else if (value.startsWith("=")){
             return ValueType.FORMULA;
         } else {
             return ValueType.STRING;
         }
+    }
+
+    public static Boolean isInteger(ValueType valueType){
+        return ValueType.INTEGER.equals(valueType);
     }
 
 }
