@@ -22,6 +22,7 @@ public class Cell {
     }
 
     public void setValue(String value) {
+        this.valueType = ValueType.determineValueType(value);
         this.value = value;
     }
 }
