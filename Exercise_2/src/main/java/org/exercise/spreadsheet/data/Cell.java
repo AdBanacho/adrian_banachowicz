@@ -4,9 +4,7 @@ public class Cell {
     private ValueType valueType;
     private String value;
 
-    public Cell(ValueType valueType, String value) {
-        this.valueType = valueType;
-        this.value = value;
+    public Cell() {
     }
 
     public ValueType getValueType() {
@@ -17,20 +15,31 @@ public class Cell {
         return value;
     }
 
-    private void setValueType(ValueType valueType) {
-        this.valueType = valueType;
+    public Cell setDefaultValues(){
+        updateCell(null);
+        return this;
     }
 
-    public void setValue(String value) {
-        if (value == null) {
-            this.value = "";
-            setValueType(ValueType.EMPTY);
-            return;
+    public void updateCell(String value) {
+        setValueType(value);
+        setValue(value);
+    }
+
+    private void setValueType(String value) {
+        this.valueType = ValueType.determineValueType(value);
+    }
+
+    private void setValue(String value) {
+        switch (valueType) {
+            case ValueType.EMPTY:
+                this.value = "";
+                break;
+            case ValueType.INTEGER:
+                this.value = value.trim();
+                break;
+            default:
+                this.value = value;
+                break;
         }
-
-        ValueType valueType = ValueType.determineValueType(value);
-        setValueType(valueType);
-
-        this.value = (ValueType.isInteger(valueType)) ? value.trim() : value;
     }
 }
