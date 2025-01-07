@@ -3,7 +3,8 @@ package org.exercise.spreadsheet.data;
 public enum ValueType {
     INTEGER,
     FORMULA,
-    STRING;
+    STRING,
+    EMPTY;
 
     public static ValueType determineValueType(String value) {
         if (value.trim().matches("-?\\d+")) {

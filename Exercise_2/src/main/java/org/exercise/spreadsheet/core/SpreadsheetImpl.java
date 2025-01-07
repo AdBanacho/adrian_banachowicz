@@ -20,7 +20,7 @@ public class SpreadsheetImpl implements Spreadsheet {
     private void initializeCells(int numberOfRows, int numberOfColumns) {
         IntStream.range(0, numberOfRows).forEach(row ->
                 IntStream.range(0, numberOfColumns).forEach(col ->
-                        cells[row][col] = new Cell(ValueType.STRING, "")
+                        cells[row][col] = new Cell(ValueType.EMPTY, "")
                 )
         );
     }
