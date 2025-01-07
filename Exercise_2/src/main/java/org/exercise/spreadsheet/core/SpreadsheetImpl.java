@@ -20,7 +20,7 @@ public class SpreadsheetImpl implements Spreadsheet {
     private void initializeCells(int numberOfRows, int numberOfColumns) {
         IntStream.range(0, numberOfRows).forEach(row ->
                 IntStream.range(0, numberOfColumns).forEach(col ->
-                        cells[row][col] = new Cell(ValueType.EMPTY, "")
+                        cells[row][col] = new Cell().setDefaultValues()
                 )
         );
     }
@@ -34,7 +34,7 @@ public class SpreadsheetImpl implements Spreadsheet {
     @Override
     public void put(int row, int column, String value) {
         validateIndices(row, column);
-        getCell(row, column).setValue(value);
+        getCell(row, column).updateCell(value);
     }
 
     @Override
