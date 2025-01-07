@@ -3,9 +3,16 @@ package org.exercise;
 import org.exercise.spreadsheet.core.SpreadsheetImpl;
 
 /**
- * Utility class for creating new spreadsheet instances
+ * Utility class for creating new instances for office purposes, such as:
+ * <li>{@link SpreadsheetImpl}</li>
  */
-public class Office {
+public final class Office {
+
+    /**
+     * Private constructor to prevent instantiation of the utility class
+     */
+    private Office (){
+    }
 
     /**
      * Creates and returns a new instance of {@link SpreadsheetImpl} with the specified number of rows and columns
