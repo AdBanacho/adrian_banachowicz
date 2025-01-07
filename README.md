@@ -2,13 +2,24 @@
 * Adrian Banachowicz
 * BE-OP-LHC-2024-174-GRAP & TE-MPE-CB-2024-166-GRAP
 
+## Table of Contents
+- [First Exercise](#first-exercise)
+    - [SQL Solution](#sql-solution)
+        - [Approach and Limitations](#approach-and-limitations)
+    - [Python - Main Solution](#python---main-solution)
+        - [Time Complexity](#time-complexity)
+        - [Space Complexity](#space-complexity)
+        - [Tests](#tests)
+        - [Improvements](#improvements)
+        - [Advantages of the Proposed Solution](#advantages-of-the-proposed-solution)
+
 ## First Exercise
     Write a function that detects all duplicate elements...
 
 I propose two solutions for this task.
 My first solution is written in SQL; 
 however, since a query is not a function, 
-I have also prepared a class _Finder_ in Python for this task.
+I have also prepared main solution with a class _Finder_ in Python for this task.
 ### SQL Solution
 
 The query is designed for MS SQL.
@@ -20,13 +31,15 @@ Instructions to Run (Free SQL IDE https://sqliteonline.com/):
 3. Add additional test cases (if needed).
 4. Execute the select query.
 
+#### Approach and Limitations
+
 _This approach was slightly different and provided an interesting
 way for me to solve the task. However, it is not perfect due to
 the use of a self-join and the requirement for an additional
 position column. Additionally, in this approach, 
 the object could be a string of up to 255 characters._
 
-### Python
+### Python - main solution
 
 The Finder class allows processing a list of objects of any type. 
 These objects can be strings, integers, or even custom objects. 
@@ -103,17 +116,20 @@ The implementation includes 5 integration/unit test cases to validate the functi
 - A list of custom objects
 - A mixed list containing characters, numbers, strings, and custom objects
 
-And 4 unit tests for methods:
+And 5 unit tests for methods:
 - `_generate_key`
 - `_count_of_objects`
+- `_update_list_of_objects`
 
 To run the tests, execute the following command:
 
 `python -m unittest .\Exercise_1\Python\src\tests\TestFinder.py`
 
-To run the tests with coverage (Last generated is here: `Exercise_1/Python/src/tests/coverageRaport/htmlcov/index.html`)
+![coverage](https://img.shields.io/badge/coverage-0.97-brightgreen)
 
-(if needed) `pip install coverage` 
+To run the tests with coverage (Last generated is [HERE:](https://github.com/AdBanacho/adrian_banachowicz/blob/exercise-1-ab/Exercise_1/Python/src/tests/coverageRaport/htmlcov/index.html) `Exercise_1/Python/src/tests/coverageRaport/htmlcov/index.html`)
+
+(if missing) `pip install coverage` 
 
 `python -m coverage run -m unittest .\Exercise_1\Python\src\tests\TestFinder.py`
 
@@ -126,6 +142,7 @@ Potential Improvement:
    * Currently, the worst-case space complexity is O(n)+O(u⋅k), which can be expensive for objects with many attributes
    * Proposed Solution: 
      * Instead of storing the entire object in the dictionary, store a reference to its position in _list_of_objects. This would reduce memory overhead
+     
 #### Advantages of the Proposed Solution
 * Extensibility: It’s easy to add additional methods to find specific objects in the list
 * Efficiency: The list of objects is processed and counted only once
