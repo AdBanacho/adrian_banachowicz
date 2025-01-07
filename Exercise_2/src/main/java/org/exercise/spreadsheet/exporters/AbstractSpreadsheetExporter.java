@@ -18,14 +18,16 @@ abstract class AbstractSpreadsheetExporter {
         int columns = sheet.getNumberOfColumns();
         String exportOption = getExportOption();
         StringBuilder stringToExport = new StringBuilder();
-        
+
         stringToExport.append(rows).append(",").append(columns).append("#");
 
         IntStream.range(0, rows).forEach(row -> {
             IntStream.range(0, columns).forEach(col -> {
                 String cellValue = sheet.get(row, col);
-                String exportValue = cellValue == null || cellValue.isEmpty() ? "" : cellValue;
-                stringToExport.append(exportValue).append(exportOption);
+                if (!cellValue.isEmpty()){
+                    stringToExport.append(cellValue);
+                }
+                stringToExport.append(exportOption);
             });
         });
 
