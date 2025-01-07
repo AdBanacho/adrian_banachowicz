@@ -2,6 +2,8 @@ package org.exercise.spreadsheet.core;
 
 import org.exercise.Office;
 import org.exercise.spreadsheet.data.ValueType;
+import org.exercise.spreadsheet.exporters.DashSpreadsheetExporter;
+import org.exercise.spreadsheet.exporters.StarSpreadsheetExporter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -78,38 +80,38 @@ public class SpreadsheetImplTest {
      * In a more real example, the different representations could perhaps be JSON,
      * XML, CSV and binary format. But we will use simple export options here.
      */
-//    @Test
-//    public void differentExportOptionsAreProvided() {
-//        sheet.put(0, 0, "a");
-//        sheet.put(1, 1, "b");
-//        sheet.put(2, 2, "c");
-//        sheet.put(3, 3, "d");
-//        sheet.put(3, 4, "e");
-//
-//        Assert.assertEquals("10,5#" // Line breaks added for readability. There are no "\n" in the String
-//                        + "a-----" // 0
-//                        + "-b----" // 1
-//                        + "--c---" // 2
-//                        + "---d-e-" // 3
-//                        + "-----" // 4
-//                        + "-----" // 5
-//                        + "-----" // 6
-//                        + "-----" // 7
-//                        + "-----" // 8
-//                        + "-----" // 9
-//                , new DashSpreadsheetExporter(sheet).export());
-//
-//        Assert.assertEquals("10,5#" // Line breaks added for readability. There are no "\n" in the String
-//                        + "a*****" // 0
-//                        + "*b****" // 1
-//                        + "**c***" // 2
-//                        + "***d*e*" // 3
-//                        + "*****" // 4
-//                        + "*****" // 5
-//                        + "*****" // 6
-//                        + "*****" // 7
-//                        + "*****" // 8
-//                        + "*****" // 9
-//                , new StarSpreadsheetExporter(sheet).export());
-//    }
+    @Test
+    public void differentExportOptionsAreProvided() {
+        sheet.put(0, 0, "a");
+        sheet.put(1, 1, "b");
+        sheet.put(2, 2, "c");
+        sheet.put(3, 3, "d");
+        sheet.put(3, 4, "e");
+
+        Assert.assertEquals("10,5#" // Line breaks added for readability. There are no "\n" in the String
+                        + "a-----" // 0
+                        + "-b----" // 1
+                        + "--c---" // 2
+                        + "---d-e-" // 3
+                        + "-----" // 4
+                        + "-----" // 5
+                        + "-----" // 6
+                        + "-----" // 7
+                        + "-----" // 8
+                        + "-----" // 9
+                , new DashSpreadsheetExporter(sheet).export());
+
+        Assert.assertEquals("10,5#" // Line breaks added for readability. There are no "\n" in the String
+                        + "a*****" // 0
+                        + "*b****" // 1
+                        + "**c***" // 2
+                        + "***d*e*" // 3
+                        + "*****" // 4
+                        + "*****" // 5
+                        + "*****" // 6
+                        + "*****" // 7
+                        + "*****" // 8
+                        + "*****" // 9
+                , new StarSpreadsheetExporter(sheet).export());
+    }
 }
