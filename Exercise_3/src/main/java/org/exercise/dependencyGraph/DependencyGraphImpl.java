@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DependencyGraphImpl implements DependencyGraph {
@@ -21,8 +18,9 @@ public class DependencyGraphImpl implements DependencyGraph {
     }
 
     @Override
-    public Map<String, Set<String>> getResolvedGraph(String fileName) {
-        return null;
+    public Map<String, Set<String>> getResolvedGraph(String fileName) throws IOException {
+        loadFromJson(fileName);
+        return resolveGraph();
     }
 
     @Override
@@ -43,5 +41,26 @@ public class DependencyGraphImpl implements DependencyGraph {
                     .collect(Collectors. toCollection(HashSet::new));
             graph.put(key, dependencies);
         });
+    }
+
+    private Map<String, Set<String>> resolveGraph() {
+        Map<String, Set<String>> resolved = new HashMap<>();
+        for (String key : graph.keySet()) {
+            resolved.put(key, resolveDependencies(key, new HashSet<>()));
+        }
+        return resolved;
+    }
+
+    private Set<String> resolveDependencies(String key, Set<String> visited) {
+        Set<String> resolved = new LinkedHashSet<>();
+        if (!visited.contains(key)) {
+            visited.add(key);
+            graph.getOrDefault(key, Collections.emptySet())
+                    .forEach(dependency -> {
+                        resolved.add(dependency);
+                        resolved.addAll(resolveDependencies(dependency, new HashSet<>(visited)));
+                    });
+        }
+        return resolved;
     }
 }
