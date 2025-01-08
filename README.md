@@ -21,7 +21,7 @@
     - [Spreadsheet Export](#spreadsheet-export)
     - [Refactor](#refactor)
     - [Documentation](#documentation)
-
+- [Third Exercise](#third-exercise)
 
 
 ---
@@ -33,7 +33,9 @@ While preparing each solution, I approached it as if I were dealing with product
 * For each pull request, I mostly added a screenshot of test coverage as evidence of properly "executed manual" tests.
 * In respect to the interview process, I did not squash commits in pull requests from feature branches to develop, which I typically do with production code to avoid clutter in the commit history.
 * I also preferred rebasing my code instead of merging, to maintain a clean, linear commit history rather than creating circular merge histories.   
-
+* For Third Exercise I created a [GitHub project](https://github.com/users/AdBanacho/projects/1/views/1) to track progress of subtasks
+  * Commits are called `Exercise 3-numberOfSubtask: message`
+  * I used one feature breach for it
 ---
 
 ## First Exercise
@@ -243,3 +245,16 @@ In the next commit, I provided the implementation for exporting the spreadsheet.
 ### Documentation
 
 In the end, I added JavaDocs to each class
+
+## Third Exercise
+
+I created a small library to generate a graph of dependencies based on an imported JSON file. 
+I used the DFS algorithm to search for dependencies in the graph. In this exercise, 
+I added Javadocs only to the methods that are exposed. Sometimes, too many lines of comments can make code unreadable, 
+so for the remaining methods, I added inline comments where necessary. I also wrote tests.
+
+Library support:
+- circular graphs
+- non-circular graphs
+
+
