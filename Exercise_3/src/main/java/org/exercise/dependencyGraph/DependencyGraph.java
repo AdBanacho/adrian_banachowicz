@@ -1,5 +1,6 @@
 package org.exercise.dependencyGraph;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public interface DependencyGraph {
      * @return a map of strings representing the resolved dependencies for each package in the graph
      * @throws java.io.IOException if the file cannot be read or parsed
      */
-    Map<String, Set<String>> getResolvedGraph(String fileName);
+    Map<String, Set<String>> getResolvedGraph(String fileName) throws IOException;
 
     /**
      * Resolves the dependency graph from the given file and returns a pretty-printed representation
