@@ -39,30 +39,36 @@ public class DependencyGraphImpl implements DependencyGraph {
                     .toList()
                     .stream()
                     .map(Object::toString)
-                    .collect(Collectors. toCollection(HashSet::new));
+                    .collect(Collectors.toCollection(HashSet::new));
             graph.put(key, dependencies);
         });
     }
 
     private Map<String, Set<String>> resolveGraph() {
-        Map<String, Set<String>> resolved = new HashMap<>();
-        for (String key : graph.keySet()) {
-            resolved.put(key, resolveDependencies(key, new HashSet<>()));
-        }
-        return resolved;
+        Map<String, Set<String>> resolvedGraph = new HashMap<>();
+        graph.keySet().forEach(key ->
+                resolvedGraph.put(key, resolveDependencies(key, new HashSet<>()))
+        );
+
+        return resolvedGraph;
     }
 
     private Set<String> resolveDependencies(String key, Set<String> visited) {
-        Set<String> resolved = new LinkedHashSet<>();
-        if (!visited.contains(key)) {
-            visited.add(key);
-            graph.getOrDefault(key, Collections.emptySet())
-                    .forEach(dependency -> {
-                        resolved.add(dependency);
-                        resolved.addAll(resolveDependencies(dependency, new HashSet<>(visited)));
-                    });
+        Set<String> resolvedGraph = new LinkedHashSet<>();
+        // If the node has already been visited, return an empty set to avoid cycles.
+        if (visited.contains(key)) {
+            return resolvedGraph;
         }
-        return resolved;
+        visited.add(key);
+        // Recursively resolve the dependencies of each direct dependency (DFS)
+        // A new visited set is created for each recursive call to track nodes in the current DFS path
+        graph.getOrDefault(key, Collections.emptySet())
+                .forEach(dependency -> {
+                    resolvedGraph.add(dependency);
+                    resolvedGraph.addAll(resolveDependencies(dependency, new HashSet<>(visited)));
+                });
+
+        return resolvedGraph;
     }
 
     private String resolveGraphToPrint(Map<String, Set<String>> resolvedGraph) {
