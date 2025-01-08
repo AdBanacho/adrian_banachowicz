@@ -24,8 +24,9 @@ public class DependencyGraphImpl implements DependencyGraph {
     }
 
     @Override
-    public String getPrettyResolvedGraph(String fileName) {
-        return null;
+    public String getPrettyResolvedGraph(String fileName) throws IOException {
+        Map<String, Set<String>> resolvedGraph =  getResolvedGraph(fileName);
+        return resolveGraphToPrint(resolvedGraph);
     }
 
     private void loadFromJson(String filePath) throws IOException {
@@ -62,5 +63,35 @@ public class DependencyGraphImpl implements DependencyGraph {
                     });
         }
         return resolved;
+    }
+
+    private String resolveGraphToPrint(Map<String, Set<String>> resolvedGraph) {
+        StringBuilder output = new StringBuilder();
+
+        resolvedGraph.keySet().forEach(root -> {
+            String node = resolveDependenciesToPrint(root, resolvedGraph, new HashSet<>(), "-");
+            output.append(node).append("\n");
+        });
+
+        return output.toString();
+    }
+
+    private String resolveDependenciesToPrint(String node, Map<String, Set<String>> resolvedGraph, Set<String> visited, String indent) {
+        // If a circular dependency is detected, mark it
+        if (visited.contains(node)) {
+            return indent + node + " circular ->";
+        }
+        visited.add(node);
+        StringBuilder builder = new StringBuilder(indent).append(node).append("\n");
+        Set<String> dependencies = resolvedGraph.getOrDefault(node, Collections.emptySet());
+        String deeperIndent = indent + "|   ";
+        // Recursively resolve the dependencies of each direct dependency (DFS)
+        // A new visited set is created for each recursive call to track nodes in the current DFS path
+        dependencies.forEach(dependency -> {
+            String newNode = resolveDependenciesToPrint(dependency, resolvedGraph, new HashSet<>(visited), deeperIndent);
+            builder.append(newNode);
+        });
+
+        return builder.toString();
     }
 }

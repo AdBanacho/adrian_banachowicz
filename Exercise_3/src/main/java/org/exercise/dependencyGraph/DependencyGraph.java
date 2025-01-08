@@ -26,6 +26,6 @@ public interface DependencyGraph {
      * @return a string representing the pretty-printed, resolved dependency graph
      * @throws java.io.IOException if the file cannot be read or parsed
      */
-    String getPrettyResolvedGraph(String fileName);
+    String getPrettyResolvedGraph(String fileName) throws IOException;
 
 }
