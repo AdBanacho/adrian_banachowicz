@@ -74,7 +74,60 @@ public class DependencyGraphImplTest {
         // Assert.assertEquals encounters issues related to assertion failures due to immutability
         Assert.assertTrue(resolvedGraph.get("A").containsAll(Set.of("B", "A")));
         Assert.assertTrue(resolvedGraph.get("B").containsAll(Set.of("A", "B")));
+    }
 
+    @Test
+    public void testGetPrettyResolvedGraph() throws IOException {
+        String result = dependencyGraph.getPrettyResolvedGraph(testFilePath);
+
+        String expectedOutput =
+                """
+                        -A
+                        -|   B
+                        -|   |   C
+                        -|   |   |   D
+                        -|   |   D
+                        -|   C
+                        -|   |   D
+                        -|   D
+                        
+                        -B
+                        -|   C
+                        -|   |   D
+                        -|   D
+                        
+                        -C
+                        -|   D
+                        
+                        -D
+                        
+                        """;
+
+        Assert.assertEquals( expectedOutput, result);
+    }
+
+    @Test
+    public void testGetPrettyResolvedGraphCircular() throws IOException {
+        JSONObject json = new JSONObject();
+        json.put("A", List.of("B"));
+        json.put("B", List.of("A"));
+
+        Path path = Paths.get(testFilePath);
+        Files.writeString(path, json.toString());
+
+        String result = dependencyGraph.getPrettyResolvedGraph(testFilePath);
+
+        String expectedOutput =
+                """
+                    -A
+                    -|   B
+                    -|   |   A circular ->-|   |   B circular ->-|   A circular ->
+                    -B
+                    -|   A
+                    -|   |   B circular ->-|   |   A circular ->-|   B circular ->
+                    """;
+
+        Assert.assertEquals( expectedOutput, result);
     }
 
 }
